@@ -3,15 +3,16 @@
 
 function setup() {
     createCanvas(800, 1200);
-     background(100)
+    background(100)
     stroke(255);
     noFill();
     noLoop(); // prevent draw() from looping
-    drawCircle();
+    drawCurve();
 }
 
-function drawCircle(x, y, d, count) {
-   
-  
+function drawCurve(end,it) {
+translate(width / 2, height)
+inerate()
 
 }
+
