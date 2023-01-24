@@ -1,84 +1,105 @@
 
 let brown1, brown2;
+let theta
 
 function setup() {
-    createCanvas(800, 1000);
+    createCanvas(1200, 1200);
     angleMode(DEGREES);
-    noLoop();
-    brown1 = color('brown');
-    brown2 = color('black');
-    slider = createSlider(5, 90, 45);
+    frameRate(10)
+ 
     
-    slider.style('width','200px')
-    slider.position(windowWidth/2-100,40);
+
+    brown1 = color('while');
+    brown2 = color('black');
+    slider = createSlider(0, 10, 5);
+
+    slider.style('width', '200px')
+    slider.position(windowWidth / 2 - 100, 20);
     slider.input(draw);
 }
 
 function draw() {
     background(100);
     resetMatrix();
-    translate(width / 2, height);
-    branch(200);
+
+    length = 200
+    let angle = 0
+  
+
+    while (angle < 360) {
+
+        push();
+        translate(width / 2, height / 2);
+        rotate(angle)
+        branch(length);
+        pop();
+        angle += 15
+        
+    }
 }
 
 function branch(length) {
-    let maxAngle = slider.value();
-    strokeWeight(map(length, 20, 200, 1, 15));
-    stroke(lerpColor(brown1, brown2, length / 150)); // mixes two colours
+      let maxAngle = slider.value()
+    strokeWeight(map(length, 15, 200, 1, 20));
+    stroke(lerpColor(brown2, brown1, length / 150)); // mixes two colours
+
+    if (length == 200) {
+        noStroke()
+        translate(0, +length)
+    }
+    if (length == 0){
+        strokeWeight(10)
+    }
 
     line(0, 0, 0, -length);
     translate(0, -length);
 
-    if (length > 10) {
-        if (length < 15) {
 
-            let r = 200 + random(-20, 20);
-            let g = 200 + random(-100, 20);
-            let b = 200 + random(-100, 20)
+    if (length > 1) {
+        if (length <10) {
 
-            fill(r, g, b, 150)
+            let r = 150 + random(-20, 20);
+            let g = 150 + random(-20, 20);
+            let b = 150 + random(-20, 20)
 
-            // let leaf = length
-            // ellipse(0, -length, leaf, leaf*2);
+           fill(r,g,b)
+
+
+            let leaf = length
+            ellipse(0, 0, leaf, leaf * 2);
+
             noStroke();
-
-            beginShape();
-
-            let radius = random(5, 20)
-
-            for (let i = 45; i < 135; i++) {
-                let x = radius * cos(i);
-                let y = radius * sin(i);
-                vertex(x, y);
-            }
-            for (let i = 135; i > 45; i--) {
-                let x = radius * cos(i)
-                let y = radius * sin(-i);
-                vertex(x, y);
-            }
-
-            endShape(CLOSE)
 
         } else {
 
             push();
-            rotate(random(-maxAngle, maxAngle));
+            rotate(randomGaussian(-maxAngle, maxAngle));
+            branch(length * 0.2);
+            pop();
+
+            push();
+            rotate(randomGaussian(-maxAngle, maxAngle));
+            branch(length * 0.2);
+            pop();
+
+            push();
+            rotate(randomGaussian(-maxAngle, maxAngle));
             branch(length * 0.4);
             pop();
-
             push();
-            rotate(random(-maxAngle, maxAngle));
-            branch(length * 0.6);
+
+            rotate(randomGaussian(-maxAngle, maxAngle));
+            branch(length *0.6);
             pop();
 
-            push();
-            rotate(random(-maxAngle, maxAngle));
-            branch(length * 0.8);
+            push()
+            rotate(randomGaussian(-maxAngle, maxAngle));
+            branch(length * 0);
             pop();
 
-            
+
+
         }
 
     }
 }
-
