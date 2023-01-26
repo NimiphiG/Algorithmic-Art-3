@@ -12,10 +12,11 @@ function setup() {
 
 function drawCircle(x, y, d, count) {
     ellipse(x, y, d);
-    if (count-- > MinLevel) {
+    if (--count > MinLevel) {
         drawCircle(x + d / 2, y, d / 2, count);
         drawCircle(x - d / 2, y, d / 2, count);
         drawCircle(x, y + d / 2, d / 2, count);
+        drawCircle(x, y - d / 2, d / 2, count);
       
     }
 
