@@ -1,149 +1,91 @@
 
 let sumA;
 let randomZ;
-let theta = 0
+
+let randomseed = 44
 
 function setup() {
     createCanvas(800, 1000, WEBGL);
-    angleMode(DEGREES);
+    angleMode(DEGREES); // allows the program to used degreese instead of radians
     colorMode(RGB);
-    frameRate(1);
-    // noLoop()
-
 }
 
 function draw() {
 
-    randomSeed(44);
+    randomSeed(randomseed);
+
     background(50, 50, 60);
+    translate(0, 0, -900);
 
 
-// if(frameCount<=10){
-//     p=-1
-// }else{
-//     p=1
-// }
-    translate(0, 00,-400 + 500*cos(theta));
-    theta+=10
     rotateX(0);
-  
-
-    noStroke()
-
+    noStroke();
 
     push();
- scale(2)
 
+    scale(2);
     translate(0, 100);
 
-    
-    fill(255,200,180,200);
-    sphere(30);
+    fill(255, 200, 180, 200); sphere(30); //pink
 
-    fill(170, 50, 200, 40);
-    sphere(40);
+    fill(170, 50, 200, 40); sphere(40);//purple
 
-    fill(80, 160, 100, 150);
-    sphere(50, 4);
-   
-    fill(20, 100, 100, 50);
-    sphere(60);
+    fill(80, 160, 100, 150); sphere(50, 4); // the second number is the detail so the lower the number the less edges it has
 
-    fill(90, 75, 70,200);
+    fill(20, 100, 100, 50); sphere(60);//green
+
     translate(0, 300, 0,);
-    cone(50, 500);
 
-   
+    fill(90, 75, 70, 200); cone(50, 500);// brown
 
-    fill(90, 75, 70,200);
     rotate(180);
-
-    translate(0,500);
+    translate(0, 500);
     cone(50, 300);
-    
-
 
     pop();
 
-
-
-
-
-
-   
-
-
-
-    // for (a = 1; a < 20; a++) {
-    //     push();
-    //     sumA = 0;
-    //     translate(0, -300);
-    //     rotateY(random(360));
-    //     branch(100, 80);
-    //     pop();
-    // }
-    rotateY(frameCount);
+    rotateY(frameCount);//spin 
 
     for (a = 1; a < 200; a++) {
         push();
         sumA = 0;
         rotateY(random(360));
-        branch(250, 80);
+        branch(250, 80); // base length and max angle to change the overall shape and size
         pop();
     }
-    // push()
-    // fill(20, 100, 100, 100)
-    // translate(0,100)
-    // sphere(400)
-    // pop()
-
 }
 
 function branch(length, maxAngle) {
-   
-    // noStroke(0);
-    fill(80, 160, 100, 100);
 
-   
+    fill(80, 160, 100, 100);// green
 
-    // line(0, 0, 0, 0, -length - 5, 0);
-    translate(0, -length, 0);
+    translate(0, -length, 0); // move to new leaf pos
 
-
-    // console.log(sumA);
-
+    
     if (sumA < 180) {
 
         randomZ = random(10, maxAngle);
 
         if (sumA + randomZ > 180) {
-            randomZ = 180 - sumA;
-        }
+            randomZ = 180 - sumA;// let last leaf direction be 180
+        } 
 
-
-        for (i = 1; i < random(sumA); i++) {
+        for (i = 1; i < random(sumA); i++) { //draw a random amount of leaves (more as you get the the end of the branch)
+            
             push();
-            stroke(20, 10, 30)
-            strokeWeight(2);
-            rotateZ(-sumA);
+
+            stroke(20, 10, 30); strokeWeight(2); // style
+
+            rotateZ(-sumA); // rotate each leaf so that it points down
             rotateY(random(360));
 
-            ellipse(0, i * i / 2, 20* i/20 , 10 * i/2);
+            ellipse(0, i * i / 2, 20 * i / 20, 10 * i / 2);
+
             pop();
         }
-        
-
-        
-        sumA += randomZ;
-
-        for (b = 0; b < 3; b++) {
             rotateZ(randomZ);
-            branch(length * 0.75);
-        }
+            sumA += randomZ; 
 
-
+            branch(length * 0.75);// recall with a sccaleing value to create recursion
     }
-
-
-
 }
